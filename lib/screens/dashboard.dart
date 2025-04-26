@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meal_planner_2/widgets/widgets.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});

@@ -1,4 +1,4 @@
-# meal_planner_2
+# meal_planner
 
 A new Flutter project.
 

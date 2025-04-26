@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meal_planner_2/widgets/widgets.dart';
+import 'package:meal_planner/imports.dart';
 
 void main() {
   runApp(const App());
@@ -20,7 +20,7 @@ class App extends StatelessWidget {
       home: const Scaffold(
         // appBar: MainAppBar(),
 
-        body: RecipeShow(),
+        body: Recipe(),
 
         bottomNavigationBar: BottomNav(),
       ),
