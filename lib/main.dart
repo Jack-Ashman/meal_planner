@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:meal_planner/screens/main_screen.dart';
-import 'package:meal_planner/screens/recipe.dart';
+import 'package:provider/provider.dart';
+
+import 'package:meal_planner/imports.dart';
 
 void main() {
-  runApp(const App());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
@@ -13,12 +19,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Meal Planner',
+
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MainScreen(),
-        '/recipe': (context) => const Recipe(),
-      },
+
+      home: const HomePage(),
+
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }
