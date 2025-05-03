@@ -11,11 +11,15 @@ class BasePage extends StatelessWidget {
 
     final selectedIndex = pageProvider.selectedPageIndex;
 
+    final pages = [
+      const HomePage(),
+      const ShoppingPage(),
+      const CalendarPage(),
+      const PantryPage(),
+      const RecipesPage(),
+    ];
+
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Home'),
-      //   elevation: 0,
-      // ),
       drawer: const MealPlannerDrawer(),
 
       appBar: AppBar(
@@ -23,13 +27,23 @@ class BasePage extends StatelessWidget {
         elevation: 0,
       ),
 
-      body: [
-        const HomePage(),
-        const ShoppingPage(),
-        const CalendarPage(),
-        const PantryPage(),
-        const RecipesPage(),
-      ].elementAt(selectedIndex),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity! < 0) {
+            if (selectedIndex < pages.length - 1) {
+              pageProvider.setSelectedPageIndex(selectedIndex + 1);
+            }
+          } else if (details.primaryVelocity! > 0) {
+            if (selectedIndex > 0) {
+              pageProvider.setSelectedPageIndex(selectedIndex - 1);
+            }
+          }
+        },
+
+        child: pages.elementAt(selectedIndex % 5),
+      ),
 
       bottomNavigationBar: const MealPlannerBottomNavigationBar(),
     );

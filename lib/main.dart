@@ -19,18 +19,24 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Meal Planner',
-
       debugShowCheckedModeBanner: false,
-
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => PageProvider()),
-        ],
-
-        child: const BasePage(),
-      ),
-
       theme: Provider.of<ThemeProvider>(context).themeData,
+
+      initialRoute: '/login',
+
+      builder: (context, child) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => PageProvider()),
+          ],
+          child: child!,
+        );
+      },
+
+      routes: {
+        '/': (context) => const BasePage(),
+        '/login': (context) => const LoginPage(),
+      },
     );
   }
 }
