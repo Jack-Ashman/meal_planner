@@ -22,7 +22,13 @@ class App extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
 
-      home: const HomePage(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => PageProvider()),
+        ],
+
+        child: const BasePage(),
+      ),
 
       theme: Provider.of<ThemeProvider>(context).themeData,
     );

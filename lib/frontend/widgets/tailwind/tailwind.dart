@@ -1,0 +1,1 @@
+export "tailwind_text.dart";
