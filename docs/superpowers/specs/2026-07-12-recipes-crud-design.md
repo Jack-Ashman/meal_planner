@@ -39,24 +39,16 @@ class Recipe {
 ```
 
 A generated `lib/models/models.dart` barrel is added by
-`generate_flutter_exports.py` per the existing convention. `lib/imports.dart`
-does not need a new export line for this — it re-exports
-`frontend/frontend.dart` only, so `recipe.dart` needs to be reachable from
-somewhere under `frontend/`. To keep the "everything imports `imports.dart`"
-convention working, `frontend/frontend.dart`'s generation is unaffected
-(models isn't under `frontend/`), so `RecipeProvider` (which lives under
-`frontend/`) will `import 'package:meal_planner/models/models.dart';`
-directly, and any frontend file needing `Recipe` gets it transitively via
-`imports.dart` → `frontend.dart` → `recipe_provider.dart` → re-export. To make
-this work cleanly, `frontend/providers/recipe_provider.dart` will `export`
-(not just `import`) the model:
-
-```dart
-export 'package:meal_planner/models/models.dart';
-```
-
-This keeps the "one import: `imports.dart`" convention intact for all
-call sites (pages, widgets) without special-casing.
+`generate_flutter_exports.py` per the existing convention. Verified
+empirically: since the generator walks every subdirectory of `lib/` (not
+just `frontend/`) and adds an `export "<dir>/<dir>.dart";` line to the
+parent barrel for each one, adding a new top-level `lib/models/` directory
+causes the *root* `lib/imports.dart` to automatically gain
+`export "models/models.dart";` alongside its existing
+`export "frontend/frontend.dart";` line — no manual re-export needed
+anywhere. `RecipeProvider` and any other file just
+`import 'package:meal_planner/imports.dart';` as usual and get `Recipe`
+transitively.
 
 ## Persistence
 
