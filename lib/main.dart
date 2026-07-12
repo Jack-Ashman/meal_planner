@@ -38,6 +38,7 @@ class App extends StatelessWidget {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => PageProvider()),
+            ChangeNotifierProvider(create: (context) => RecipeProvider()),
           ],
           child: child!,
         );
