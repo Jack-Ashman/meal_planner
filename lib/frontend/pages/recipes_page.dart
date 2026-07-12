@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:meal_planner/imports.dart';
 
 class RecipesPage extends StatelessWidget {
@@ -6,26 +7,25 @@ class RecipesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.yellow.withAlpha(255),
-      child: Center(
-        child: TextButton(
-          onPressed: () {
-            final dummyRecipe = Recipe(
-              id: '1',
-              title: 'Dummy Recipe',
-              imagePath: null,
-              steps: ['Step 1', 'Step 2'],
-            );
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RecipePage(recipe: dummyRecipe),
-              ),
-            );
-          },
-          child: Text('Recipes Page'),
-        ),
+    final recipes = context.watch<RecipeProvider>().recipes;
+
+    return Scaffold(
+      body: recipes.isEmpty
+          ? const Center(child: Text('No recipes yet — tap + to add one'))
+          : ListView.separated(
+              padding: const EdgeInsets.all(16),
+              itemCount: recipes.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 16),
+              itemBuilder: (context, index) => RecipeCard(recipe: recipes[index]),
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddRecipePage()),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
