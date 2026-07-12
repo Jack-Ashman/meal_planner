@@ -66,6 +66,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
     }
 
     final id = DateTime.now().millisecondsSinceEpoch.toString();
+    final recipeProvider = context.read<RecipeProvider>();
     String? imagePath;
 
     final pickedImage = _pickedImage;
@@ -74,7 +75,6 @@ class _AddRecipePageState extends State<AddRecipePage> {
     }
 
     final recipe = Recipe(id: id, title: title, imagePath: imagePath, steps: steps);
-    final recipeProvider = context.read<RecipeProvider>();
 
     await recipeProvider.addRecipe(recipe);
 
