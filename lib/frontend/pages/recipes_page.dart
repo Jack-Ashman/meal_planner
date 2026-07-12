@@ -11,10 +11,16 @@ class RecipesPage extends StatelessWidget {
       child: Center(
         child: TextButton(
           onPressed: () {
+            final dummyRecipe = Recipe(
+              id: '1',
+              title: 'Dummy Recipe',
+              imagePath: null,
+              steps: ['Step 1', 'Step 2'],
+            );
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const RecipePage(),
+                builder: (context) => RecipePage(recipe: dummyRecipe),
               ),
             );
           },
