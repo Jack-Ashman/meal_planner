@@ -4,4 +4,5 @@ export "home_page.dart";
 export "login_page.dart";
 export "pantry_page.dart";
 export "recipes_page.dart";
+export "recipe_page.dart";
 export "shopping_page.dart";
