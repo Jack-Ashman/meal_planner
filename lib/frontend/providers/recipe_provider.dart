@@ -7,11 +7,12 @@ class RecipeProvider extends ChangeNotifier {
   static const _prefsKey = 'recipes';
 
   List<Recipe> _recipes = [];
+  late final Future<void> _initialLoad;
 
   List<Recipe> get recipes => List.unmodifiable(_recipes);
 
   RecipeProvider() {
-    load();
+    _initialLoad = load();
   }
 
   Future<void> load() async {
@@ -25,6 +26,8 @@ class RecipeProvider extends ChangeNotifier {
   }
 
   Future<void> addRecipe(Recipe recipe) async {
+    await _initialLoad;
+
     _recipes = [..._recipes, recipe];
     notifyListeners();
 

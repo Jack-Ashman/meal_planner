@@ -41,4 +41,18 @@ void main() {
     expect(secondProvider.recipes, hasLength(1));
     expect(secondProvider.recipes.first.title, 'Soup');
   });
+
+  test('addRecipe called immediately after construction does not lose data still being loaded', () async {
+    SharedPreferences.setMockInitialValues({
+      'recipes': jsonEncode([
+        Recipe(id: 'existing', title: 'Existing', imagePath: null, steps: ['Step']).toJson(),
+      ]),
+    });
+
+    final provider = RecipeProvider();
+    await provider.addRecipe(Recipe(id: 'new', title: 'New', imagePath: null, steps: ['Step']));
+
+    expect(provider.recipes, hasLength(2));
+    expect(provider.recipes.map((r) => r.id), containsAll(['existing', 'new']));
+  });
 }
