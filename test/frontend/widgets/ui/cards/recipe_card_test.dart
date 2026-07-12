@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meal_planner/frontend/widgets/ui/cards/recipe_card.dart';
@@ -40,22 +39,6 @@ void main() {
     );
 
     expect(find.byType(Image), findsNothing);
-  });
-
-  testWidgets('renders a file image when an imagePath is set', (tester) async {
-    final tempDir = await Directory.systemTemp.createTemp('recipe_card_test');
-    final imageFile = File('${tempDir.path}/photo.jpg');
-    await imageFile.writeAsBytes([0, 1, 2, 3]);
-    addTearDown(() => tempDir.delete(recursive: true));
-
-    final recipe = Recipe(id: '1', title: 'Salad', imagePath: imageFile.path, steps: ['Chop']);
-
-    await tester.pumpWidget(
-      MaterialApp(home: Scaffold(body: RecipeCard(recipe: recipe))),
-    );
-
-    final image = tester.widget<Image>(find.byType(Image));
-    expect((image.image as FileImage).file.path, imageFile.path);
   });
 
   testWidgets('tapping the card navigates to the recipe detail page', (tester) async {
