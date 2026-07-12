@@ -28,5 +28,7 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Meal Planner needs access to your photos so you can add a picture to a recipe.</string>
 </dict>
 </plist>
